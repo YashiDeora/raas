@@ -1,0 +1,71 @@
+mit@soe:~$ mongo
+
+
+> use blog
+switched to db blog
+> db.posts.find()
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc31"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc32"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc33"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc34"), "title" : "Learning Python", "content" : "Learn Python, it is easy", "author" : "Bill" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d3"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d4"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d5"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d6"), "title" : "Learning Python", "content" : "Learn Python, it is easy", "author" : "Bill" }
+
+> db.posts.aggregate({"$project":{"author":1, "_id":0}})
+{ "author" : "Scott" }
+{ "author" : "Scott" }
+{ "author" : "Scott" }
+{ "author" : "Bill" }
+{ "author" : "Scott" }
+{ "author" : "Scott" }
+{ "author" : "Scott" }
+{ "author" : "Bill" }
+
+> db.posts.aggregate({"$project":{"title":1, "_id":0}})
+{ "title" : "Python and MongoDB" }
+{ "title" : "Python and MongoDB" }
+{ "title" : "Virtual Environments" }
+{ "title" : "Learning Python" }
+{ "title" : "Python and MongoDB" }
+{ "title" : "Python and MongoDB" }
+{ "title" : "Virtual Environments" }
+{ "title" : "Learning Python" }
+
+> db.posts.aggregate({$match: { author: "Scott" }})
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc31"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc32"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc33"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d3"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d4"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d5"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+
+> db.posts.aggregate([{$match: { author: "Scott" }},{$limit:3}])
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc31"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc32"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc33"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+
+> db.posts.aggregate({$skip:3})
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc34"), "title" : "Learning Python", "content" : "Learn Python, it is easy", "author" : "Bill" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d3"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d4"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d5"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da41451f8f73c2c190af9d6"), "title" : "Learning Python", "content" : "Learn Python, it is easy", "author" : "Bill" }
+
+> db.posts.aggregate({$limit:3})
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc31"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc32"), "title" : "Python and MongoDB", "content" : "PyMongo is fun, you guys", "author" : "Scott" }
+{ "_id" : ObjectId("5da4140e28be32c24f9bbc33"), "title" : "Virtual Environments", "content" : "Use virtual environments, you guys", "author" : "Scott" }
+
+> db.data.insertOne({"title":"C programming", "author":["ram","aman"]})
+{
+	"acknowledged" : true,
+	"insertedId" : ObjectId("5da47c564a884e65cec83ec4")
+}
+
+> db.data.aggregate({ $unwind : "$author" })
+{ "_id" : ObjectId("5da47c564a884e65cec83ec4"), "title" : "C programming", "author" : "ram" }
+{ "_id" : ObjectId("5da47c564a884e65cec83ec4"), "title" : "C programming", "author" : "aman" }
+ 
+
