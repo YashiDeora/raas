@@ -1,0 +1,21 @@
+soe@3512:~$ sudo apt-get install build-essential python-dev
+
+soe@3512:~$ sudo apt-get install pymongo
+
+soe@3512:~/Desktop$ python3 mongo_connect.py
+
+
+OUTPUT WILL LOOK LIKE
+
+Connected to MongoDB Server
+
+Inserted id of single document is
+5da416c56c8253b59c371c06
+
+Inserted id of multiple documents are
+[ObjectId('5da416c56c8253b59c371c07'), ObjectId('5da416c56c8253b59c371c08'), ObjectId('5da416c56c8253b59c371c09')]
+
+Found document is
+{'_id': ObjectId('5da41558c740cc667f142d2d'), 'title': 'Learning Python', 'content': 'Learn Python, it is easy', 'author': 'Bill'}
+
+
